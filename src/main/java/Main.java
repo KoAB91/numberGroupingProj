@@ -98,25 +98,35 @@ public class Main {
         groups.clear();
         groupList.sort(compareByLines);
 
+
+        StringBuilder listToOutput = new StringBuilder();
         counter = 0;
         for(StringBuilder group : groupList){
             if(group.chars().filter(c -> c == '\n').count() > 0) {
                 counter++;
             }
         }
-        System.out.println("Количество групп более чем с одним элементом- " + counter);
+        listToOutput.append("Количество групп более чем с одним элементом - ").append(counter).append("\n");
 
-        StringBuilder consoleList = new StringBuilder();
         counter = 0;
         for(StringBuilder group : groupList){
             counter++;
-            consoleList.append("Группа ").append(counter).append("\n").append(group).append("\n");
+            listToOutput.append("Группа ").append(counter).append("\n").append(group).append("\n");
         }
-        System.out.println(consoleList);
 
         //long endTime = System.currentTimeMillis();
         //long timeElapsed = endTime - startTime;
-        //System.out.printf("Время выполнения - %s сек.", timeElapsed/1000);
+        //listToOutput.append("Время выполнения - ").append(timeElapsed/1000).append(" сек.");
+
+        try {
+            FileWriter writer = new FileWriter("grouped_lines.txt");
+            writer.write(listToOutput.toString());
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл");
+            e.printStackTrace();
+        }
+
     }
 
     public static void addNewKeys(String[] elements,
